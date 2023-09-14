@@ -11,6 +11,8 @@ export default {
         data: empleados,
       });
     } catch (error) {
+      console.log(error);
+
       return res.status(500).json({
         message: "Error al obtener los empleados",
         data: error,
@@ -29,6 +31,35 @@ export default {
     } catch (error) {
       return res.status(500).json({
         message: "Error al obtener el empleado",
+        data: error,
+      });
+    }
+  },
+  createEmpleado: async (req: Request, res: Response) => {
+    try {
+      const { dni, nombre, direccion, id_puesto } = req.body;
+
+      if (!dni || !nombre || !direccion || !id_puesto) {
+        return res.status(400).json({
+          message: "Faltan datos en el body",
+          data: null,
+        });
+      }
+
+      await EmpleadosModel.createEmpleado({
+        dni,
+        nombre,
+        direccion,
+        id_puesto,
+      });
+
+      return res.status(200).json({
+        message: "Empleado creado correctamente",
+        data: true,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: "Error al crear el empleado",
         data: error,
       });
     }

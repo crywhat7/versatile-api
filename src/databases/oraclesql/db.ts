@@ -25,8 +25,6 @@ export class Database {
 
     const result = await this.connection.execute<T>(query, params ?? {});
 
-    console.log({ result });
-
     return result;
   }
 }
