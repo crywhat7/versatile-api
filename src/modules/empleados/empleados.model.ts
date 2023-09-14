@@ -41,4 +41,28 @@ export default {
 
     return true;
   },
+
+  updateEmpleado: async ({
+    id_empleado,
+    dni,
+    nombre,
+    direccion,
+    id_puesto,
+    tiene_acceso,
+    url_imagen,
+  }: {
+    id_empleado: string;
+    dni: string;
+    nombre: string;
+    direccion: string;
+    id_puesto: number;
+    tiene_acceso: number;
+    url_imagen: string;
+  }) => {
+    const query = `CALL update_empleado('${id_empleado}', '${dni}', '${nombre}', '${direccion}', ${id_puesto}, ${tiene_acceso}, '${url_imagen}')`;
+
+    await db.execute(query);
+
+    return true;
+  },
 };

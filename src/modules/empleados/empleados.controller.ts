@@ -64,4 +64,46 @@ export default {
       });
     }
   },
+  updateEmpleado: async (req: Request, res: Response) => {
+    try {
+      const { id: id_empleado } = req.params;
+      const { dni, nombre, direccion, id_puesto, tiene_acceso, url_imagen } =
+        req.body;
+
+      if (
+        !id_empleado ||
+        !dni ||
+        !nombre ||
+        !direccion ||
+        !id_puesto ||
+        !tiene_acceso ||
+        !url_imagen
+      ) {
+        return res.status(400).json({
+          message: "Faltan datos en el body",
+          data: null,
+        });
+      }
+
+      await EmpleadosModel.updateEmpleado({
+        id_empleado,
+        dni,
+        nombre,
+        direccion,
+        id_puesto,
+        tiene_acceso,
+        url_imagen,
+      });
+
+      return res.status(200).json({
+        message: "Empleado actualizado correctamente",
+        data: true,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: "Error al crear el empleado",
+        data: error,
+      });
+    }
+  },
 };
