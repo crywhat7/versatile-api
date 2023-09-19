@@ -106,4 +106,21 @@ export default {
       });
     }
   },
+  deleteEmpleado: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+
+      await EmpleadosModel.deleteEmpleado(id);
+
+      return res.status(200).json({
+        message: "Empleado eliminado correctamente",
+        data: true,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: "Error al eliminar el empleado",
+        data: error,
+      });
+    }
+  },
 };

@@ -5,9 +5,8 @@ import { jsonParser } from "../../utils/json_array.parser";
 const db = new Database(config);
 
 export default {
-  getAllEmpleados: async () => {
-    // const query = arrayAgg("EMPLEADOS");
-    const query = "SELECT TO_CHAR(get_empleados) AS result FROM DUAL";
+  getAllDuenios: async () => {
+    const query = "SELECT TO_CHAR(get_duenios) AS result FROM DUAL";
     const result = await db.execute(query);
 
     const data = jsonParser(result);
@@ -15,8 +14,8 @@ export default {
     return data;
   },
 
-  getEmpleadoBy: async (id: string) => {
-    const query = `SELECT TO_CHAR(get_empleado_by('${id}')) AS result FROM DUAL`;
+  getDuenioBy: async (id: string) => {
+    const query = `SELECT TO_CHAR(get_duenio_by('${id}')) AS result FROM DUAL`;
     const result = await db.execute(query);
 
     const data = jsonParser(result);
@@ -24,50 +23,46 @@ export default {
     return data;
   },
 
-  createEmpleado: async ({
+  createDuenio: async ({
     dni,
     nombre,
     direccion,
-    id_puesto,
-  }: {
-    dni: string;
-    nombre: string;
-    direccion: string;
-    id_puesto: number;
-  }) => {
-    const query = `CALL insert_empleado('${dni}', '${nombre}', '${direccion}', ${id_puesto})`;
-
-    await db.execute(query);
-
-    return true;
-  },
-
-  updateEmpleado: async ({
-    id_empleado,
-    dni,
-    nombre,
-    direccion,
-    id_puesto,
-    tiene_acceso,
     url_imagen,
   }: {
-    id_empleado: string;
     dni: string;
     nombre: string;
     direccion: string;
-    id_puesto: number;
-    tiene_acceso: number;
     url_imagen: string;
   }) => {
-    const query = `CALL update_empleado('${id_empleado}', '${dni}', '${nombre}', '${direccion}', ${id_puesto}, ${tiene_acceso}, '${url_imagen}')`;
+    const query = `CALL insert_duenio('${dni}', '${nombre}', '${direccion}', '${url_imagen}')`;
 
     await db.execute(query);
 
     return true;
   },
 
-  deleteEmpleado: async (id: string) => {
-    const query = `CALL delete_empleado('${id}')`;
+  updateDuenio: async ({
+    id_duenio,
+    dni,
+    nombre,
+    direccion,
+    url_imagen,
+  }: {
+    id_duenio: string;
+    dni: string;
+    nombre: string;
+    direccion: string;
+    url_imagen: string;
+  }) => {
+    const query = `CALL update_duenio('${id_duenio}', '${dni}', '${nombre}', '${direccion}', '${url_imagen}')`;
+
+    await db.execute(query);
+
+    return true;
+  },
+
+  deleteDuenio: async (id: string) => {
+    const query = `CALL delete_duenio('${id}')`;
 
     await db.execute(query);
 
