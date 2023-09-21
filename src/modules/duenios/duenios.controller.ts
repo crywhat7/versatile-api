@@ -15,7 +15,7 @@ export default {
 
       return res.status(500).json({
         message: "Error al obtener los dueños",
-        data: error,
+        data: (error as any)?.message ?? error,
       });
     }
   },
@@ -31,7 +31,7 @@ export default {
     } catch (error) {
       return res.status(500).json({
         message: "Error al obtener el dueño",
-        data: error,
+        data: (error as any)?.message ?? error,
       });
     }
   },
@@ -60,7 +60,7 @@ export default {
     } catch (error) {
       return res.status(500).json({
         message: "Error al crear el dueño",
-        data: error,
+        data: (error as any)?.message ?? error,
       });
     }
   },
@@ -91,7 +91,7 @@ export default {
     } catch (error) {
       return res.status(500).json({
         message: "Error al actualizar el dueño",
-        data: error,
+        data: (error as any)?.message ?? error,
       });
     }
   },
@@ -108,7 +108,7 @@ export default {
     } catch (error) {
       return res.status(500).json({
         message: "Error al eliminar el dueño",
-        data: error,
+        data: (error as any)?.message ?? error,
       });
     }
   },

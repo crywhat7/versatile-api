@@ -15,7 +15,7 @@ export default {
 
       return res.status(500).json({
         message: "Error al obtener los empleados",
-        data: error,
+        data: (error as any)?.message ?? error,
       });
     }
   },
@@ -31,15 +31,15 @@ export default {
     } catch (error) {
       return res.status(500).json({
         message: "Error al obtener el empleado",
-        data: error,
+        data: (error as any)?.message ?? error,
       });
     }
   },
   createEmpleado: async (req: Request, res: Response) => {
     try {
-      const { dni, nombre, direccion, id_puesto } = req.body;
+      const { dni, nombre, direccion } = req.body;
 
-      if (!dni || !nombre || !direccion || !id_puesto) {
+      if (!dni || !nombre || !direccion) {
         return res.status(400).json({
           message: "Faltan datos en el body",
           data: null,
@@ -50,7 +50,7 @@ export default {
         dni,
         nombre,
         direccion,
-        id_puesto,
+        id_puesto: 1,
       });
 
       return res.status(200).json({
@@ -58,27 +58,19 @@ export default {
         data: true,
       });
     } catch (error) {
+      const [xd] = (error as any).message?.split("\n");
       return res.status(500).json({
         message: "Error al crear el empleado",
-        data: error,
+        data: xd ?? error,
       });
     }
   },
   updateEmpleado: async (req: Request, res: Response) => {
     try {
       const { id: id_empleado } = req.params;
-      const { dni, nombre, direccion, id_puesto, tiene_acceso, url_imagen } =
-        req.body;
+      const { dni, nombre, direccion, url_imagen } = req.body;
 
-      if (
-        !id_empleado ||
-        !dni ||
-        !nombre ||
-        !direccion ||
-        !id_puesto ||
-        !tiene_acceso ||
-        !url_imagen
-      ) {
+      if (!id_empleado || !dni || !nombre || !direccion || !url_imagen) {
         return res.status(400).json({
           message: "Faltan datos en el body",
           data: null,
@@ -90,8 +82,8 @@ export default {
         dni,
         nombre,
         direccion,
-        id_puesto,
-        tiene_acceso,
+        id_puesto: 1,
+        tiene_acceso: 1,
         url_imagen,
       });
 
@@ -102,7 +94,7 @@ export default {
     } catch (error) {
       return res.status(500).json({
         message: "Error al crear el empleado",
-        data: error,
+        data: (error as any)?.message ?? error,
       });
     }
   },
@@ -119,7 +111,7 @@ export default {
     } catch (error) {
       return res.status(500).json({
         message: "Error al eliminar el empleado",
-        data: error,
+        data: (error as any)?.message ?? error,
       });
     }
   },
